@@ -1,4 +1,36 @@
-import { Controller } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post} from '@nestjs/common';
+import { LinksService } from './links.service';
+import { Link } from './link.entity';
+import { CreateLinkDto } from './dto/create.link.dto';
 
 @Controller('links')
-export class LinksController {}
+export class LinksController {
+    constructor(private linkService: LinksService) {
+    }
+
+    @Get()
+    findAll() {
+        return this.linkService.findAll()
+    }
+
+    @Get(":id")
+    findOne(@Param("id", ParseIntPipe) id : number) {
+        return this.linkService.findOne(id)
+    }
+
+    @Post() 
+    async create(@Body("originalUrl") originalUrl: string): Promise<CreateLinkDto> {
+        return await this.linkService.create(originalUrl)
+    }
+
+    @Delete(":id")
+    @HttpCode(HttpStatus.NO_CONTENT)
+    async delete(@Param("id", ParseIntPipe) id : number) : Promise<void> {
+        await this.linkService.delete(id)
+    }
+
+    @Patch(":id")
+    async updateOne(@Param("id", ParseIntPipe) id : number, @Body("originalUrl") originalUrl : string) {
+        return await this.linkService.updateOne(id, originalUrl)
+    }
+}
