@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post} from '@nestjs/common';
 import { LinksService } from './links.service';
-import { Link } from './link.entity';
+import { Link } from './links.entity';
 import { CreateLinkDto } from './dto/create.link.dto';
 
 @Controller('links')

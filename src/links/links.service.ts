@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Link } from './link.entity';
+import { Link } from './links.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateLinkDto } from './dto/create.link.dto';
@@ -24,6 +24,17 @@ export class LinksService {
     }
 
     return link
+  }
+
+  async FindOneByShortCode(shortCode: string): Promise<string> {
+    const link = await this.linkRepository.findOneBy({shortCode})
+
+    if (!link) {
+      throw new NotFoundException(`Link with that shortCode:${shortCode} is not existed`)
+    }
+
+    const {originalUrl} = link
+    return originalUrl
   }
 
   async create(originalUrl: string): Promise<CreateLinkDto>{

@@ -3,8 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { Link } from './links/link.entity';
+import { Link } from './links/links.entity';
 import { LinksModule } from './links/links.module';
+import { RedirectController } from './redirect/redirect.controller';
+import { RedirectModule } from './redirect/redirect.module';
 
 
 @Module({
@@ -21,6 +23,7 @@ import { LinksModule } from './links/links.module';
       synchronize: true,
     }),
     LinksModule,
+    RedirectModule,
   ],
   controllers: [AppController],
   providers: [AppService],
