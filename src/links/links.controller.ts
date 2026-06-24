@@ -19,8 +19,8 @@ export class LinksController {
     }
 
     @Post() 
-    async create(@Body("originalUrl") originalUrl: string): Promise<CreateLinkDto> {
-        return await this.linkService.create(originalUrl)
+    async create(@Body() dto: CreateLinkDto): Promise<Link> {
+        return await this.linkService.create(dto)
     }
 
     @Delete(":id")
@@ -30,7 +30,7 @@ export class LinksController {
     }
 
     @Patch(":id")
-    async updateOne(@Param("id", ParseIntPipe) id : number, @Body("originalUrl") originalUrl : string) {
-        return await this.linkService.updateOne(id, originalUrl)
+    async updateOne(@Param("id", ParseIntPipe) id : number, @Body() dto : CreateLinkDto): Promise<Link> {
+        return await this.linkService.updateOne(id, dto)
     }
 }

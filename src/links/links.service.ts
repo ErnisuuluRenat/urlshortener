@@ -37,7 +37,8 @@ export class LinksService {
     return originalUrl
   }
 
-  async create(originalUrl: string): Promise<CreateLinkDto>{
+  async create(dto: CreateLinkDto): Promise<Link>{
+    const {originalUrl} = dto
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = ''
 
@@ -50,9 +51,9 @@ export class LinksService {
       shortCode: result,
     }
 
-    await this.linkRepository.save(newLink)
+    
 
-    return newLink
+    return await this.linkRepository.save(newLink)
   }
 
   async delete(id: number) : Promise<void> {
@@ -65,10 +66,11 @@ export class LinksService {
     await this.linkRepository.delete(id)
   }
 
-  async updateOne(id: number, originallUrl: string) : Promise<Link>{
+  async updateOne(id: number, dto: CreateLinkDto) : Promise<Link>{
+    const {originalUrl} = dto
     const link = await this.linkRepository.preload({
       id: id,
-      originalUrl: originallUrl
+      originalUrl: originalUrl
     })
 
     if (!link) {
