@@ -58,4 +58,9 @@ describe('LinksService', () => {
     const result = await service.delete(id)
     expect(mockRepository.delete).toHaveBeenCalledWith(id)
   })
+  it("should throw NotFoundException when link not found", async () => {
+    const id = 999
+    mockRepository.findOneBy.mockResolvedValue(null)
+    await expect(service.findOne(id)).rejects.toThrow(`Link with id ${id} not found`)
+  });
 }); 

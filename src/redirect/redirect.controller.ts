@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Redirect } from '@nestjs/common';
-import { LinksService } from 'links/links.service';
+import { LinksService } from '../links/links.service';
 
 @Controller('')
 export class RedirectController {
